@@ -29,6 +29,7 @@ module.exports = async (req, res) => {
   }
 
   const purpose = Array.isArray(body.purpose) ? body.purpose.map(clean) : clean(body.purpose);
+  const submittedAt = new Date().toISOString();
   const record = {
     type,
     name: clean(body.name), phone: clean(body.phone), email: clean(body.email), company: clean(body.company),
@@ -37,7 +38,19 @@ module.exports = async (req, res) => {
     work_experience: clean(body.workExperience || body.experience), purposes: purpose,
     amount_needed: clean(body.amountNeeded), requirements: clean(body.requirements), plan: clean(body.plan),
     plan_price: numeric(body.planPrice), project_name: clean(body.projectName), project_cost: clean(body.projectCost),
-    dpr_requirements: clean(body.dprRequirements), business_plan_requirements: clean(body.businessPlanRequirements)
+    dpr_requirements: clean(body.dprRequirements), business_plan_requirements: clean(body.businessPlanRequirements),
+    submitted_at: submittedAt,
+    source_tag: clean(body.sourceTag),
+    marketing_source: clean(body.marketingSource),
+    marketing_medium: clean(body.marketingMedium),
+    marketing_campaign: clean(body.marketingCampaign),
+    marketing_content: clean(body.marketingContent),
+    marketing_term: clean(body.marketingTerm),
+    gclid: clean(body.gclid),
+    fbclid: clean(body.fbclid),
+    li_fat_id: clean(body.liFatId),
+    landing_page: clean(body.landingPage),
+    referrer: clean(body.referrer)
   };
 
   const { data, error } = await supabase.from('leads').insert(record).select('id').single();

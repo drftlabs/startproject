@@ -73,6 +73,8 @@ footer{margin-top:52px;background:#111318;color:#fff;padding:40px 0 22px}.footer
 .plan-selector{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 12px;margin:10px 0;border:1px solid #dddafc;background:var(--soft-purple);border-radius:10px}.plan-selector small,.plan-selector strong,.plan-selector span{display:block}.plan-selector small{font-size:7px;color:#777}.plan-selector strong{font-size:12px;color:var(--purple)}.plan-selector span{font-size:7px;color:#555d69}.plan-selector select{border:1px solid #d8d4ff;border-radius:8px;background:#fff;padding:7px;font-size:8px;font-weight:700;color:var(--purple)}.contact-note{background:#f7f7f9;border:1px solid #eceef1;border-radius:9px;padding:9px;font-size:8px;color:#646c78;margin-bottom:10px}.contact-note strong{color:var(--purple)}
 
 .policy-box{width:min(700px,100%);padding:30px}.policy-box>p{font-size:10px;line-height:1.7;color:var(--muted);margin-bottom:16px}.policy-section{padding:13px 0;border-top:1px solid #eef0f3}.policy-section h4{font-size:10px;margin:0 0 5px;color:var(--text)}.policy-section p{font-size:9px;line-height:1.7;color:var(--muted);margin:0}.policy-links{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}.policy-links .btn{font-size:8px;padding:9px 11px}
+
+.submit-spinner{display:none;width:17px;height:17px;border:2px solid rgba(255,255,255,.45);border-top-color:#fff;border-radius:50%;animation:spSpin .7s linear infinite;vertical-align:middle}.form-submit.is-loading .submit-spinner{display:inline-block}.form-submit.is-loading .submit-label{display:none}.form-submit.is-loading{cursor:wait;opacity:.9}@keyframes spSpin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
@@ -118,21 +120,20 @@ footer{margin-top:52px;background:#111318;color:#fff;padding:40px 0 22px}.footer
 <div class="form-page-title">Contact — where should we send the next step?</div>
 <div class="simple-grid">
 <div class="field"><label>Full name</label><input name="name" required placeholder="Your name"></div>
-<div class="field"><label>Phone number</label><input name="phone" required inputmode="tel" placeholder="+91 98765 43210"></div>
 <div class="field full"><label>Email address</label><input name="email" required type="email" placeholder="you@company.com"></div>
 <div class="field full"><label>Business / company name</label><input name="company" required placeholder="Company or business name"></div>
 </div>
 <div class="contact-note">Your selected plan: <strong id="contactPlanName">Enterprise</strong> · <span id="contactPlanPrice">₹570 + GST</span></div>
-<div class="form-actions"><button type="button" class="form-back" onclick="prevProjectStep()">← Back</button><button class="form-submit" type="submit">Continue to Payment →</button></div>
+<div class="form-actions"><button type="button" class="form-back" onclick="prevProjectStep()">← Back</button><button class="form-submit" id="projectSubmitBtn" type="submit"><span class="submit-label">Continue to Payment →</span><span class="submit-spinner" aria-hidden="true"></span></button></div>
 </div>
 </form></div></div>
 
-<div class="modal" id="investorModal" onclick="outsideClose(event,'investorModal')"><div class="modal-box"><button class="close" onclick="closeModal('investorModal')">×</button><div class="kicker">INVESTOR DPR</div><h3>Tell us about your project.</h3><p>Share the basics and we’ll contact you about the detailed investor-focused DPR.</p><form onsubmit="submitForm(event,'investorModal')"><div class="form-grid"><div class="field"><label>Full name</label><input required placeholder="Your name"></div><div class="field"><label>Phone</label><input required placeholder="+91 98765 43210"></div><div class="field"><label>Email</label><input required type="email" placeholder="you@company.com"></div><div class="field"><label>Business / company</label><input required placeholder="Company name"></div><div class="field"><label>Project name</label><input required placeholder="Project name"></div><div class="field"><label>Approx. project cost</label><input placeholder="e.g. ₹5 Crore"></div></div><div class="field"><label>What do you need from the DPR?</label><textarea rows="3" placeholder="Investor financials, project costing, market research, projections, etc."></textarea></div><button class="submit" type="submit">Request <strong>Investor DPR</strong> →</button></form></div></div>
+<div class="modal" id="investorModal" onclick="outsideClose(event,'investorModal')"><div class="modal-box"><button class="close" onclick="closeModal('investorModal')">×</button><div class="kicker">INVESTOR DPR</div><h3>Tell us about your project.</h3><p>Share the basics and we’ll contact you about the detailed investor-focused DPR.</p><form onsubmit="submitForm(event,'investorModal')"><div class="form-grid"><div class="field"><label>Full name</label><input required placeholder="Your name"></div><div class="field"><label>Email</label><input required type="email" placeholder="you@company.com"></div><div class="field"><label>Business / company</label><input required placeholder="Company name"></div><div class="field"><label>Project name</label><input required placeholder="Project name"></div><div class="field"><label>Approx. project cost</label><input placeholder="e.g. ₹5 Crore"></div></div><div class="field"><label>What do you need from the DPR?</label><textarea rows="3" placeholder="Investor financials, project costing, market research, projections, etc."></textarea></div><button class="submit" type="submit">Request <strong>Investor DPR</strong> →</button></form></div></div>
 
-<div class="modal" id="businessModal" onclick="outsideClose(event,'businessModal')"><div class="modal-box"><button class="close" onclick="closeModal('businessModal')">×</button><div class="kicker" style="color:var(--orange)">CUSTOMIZED BUSINESS PLAN</div><h3>Tell us what you are building.</h3><p>Customized business plans starting from ₹5,000.</p><form onsubmit="submitForm(event,'businessModal')"><div class="form-grid"><div class="field"><label>Full name</label><input required placeholder="Your name"></div><div class="field"><label>Phone</label><input required placeholder="+91 98765 43210"></div><div class="field"><label>Email</label><input required type="email" placeholder="you@company.com"></div><div class="field"><label>Business / company</label><input required placeholder="Company name"></div></div><div class="field"><label>What should the business plan cover?</label><textarea rows="3" placeholder="Concept, market, strategy, financials, execution, fundraising, etc."></textarea></div><button class="submit orange" type="submit">Request Business Plan →</button></form></div></div>
+<div class="modal" id="businessModal" onclick="outsideClose(event,'businessModal')"><div class="modal-box"><button class="close" onclick="closeModal('businessModal')">×</button><div class="kicker" style="color:var(--orange)">CUSTOMIZED BUSINESS PLAN</div><h3>Tell us what you are building.</h3><p>Customized business plans starting from ₹5,000.</p><form onsubmit="submitForm(event,'businessModal')"><div class="form-grid"><div class="field"><label>Full name</label><input required placeholder="Your name"></div><div class="field"><label>Email</label><input required type="email" placeholder="you@company.com"></div><div class="field"><label>Business / company</label><input required placeholder="Company name"></div></div><div class="field"><label>What should the business plan cover?</label><textarea rows="3" placeholder="Concept, market, strategy, financials, execution, fundraising, etc."></textarea></div><button class="submit orange" type="submit">Request Business Plan →</button></form></div></div>
 
 <div class="modal" id="termsModal" onclick="outsideClose(event,'termsModal')"><div class="modal-box policy-box"><button class="close" onclick="closeModal('termsModal')">×</button><div class="kicker">LEGAL · TERMS</div><h3>Terms & Conditions</h3><p>These terms apply to customized project reports, business plans and related financial documentation ordered through StartProject.</p><div class="policy-section"><h4>1. Customized service</h4><p>Every report is prepared against the information, requirements and project details submitted by the customer. StartProject does not sell ready-made or copy-paste project reports.</p></div><div class="policy-section"><h4>2. Information provided by the customer</h4><p>The customer is responsible for providing complete, accurate and current information, including project cost, business details, location, financial assumptions and intended use of the report. We prepare the report based on the information received.</p></div><div class="policy-section"><h4>3. Delivery timeline</h4><p>The stated 2–10 working hour delivery window begins after payment confirmation and after the required information has been received. If information is incomplete or additional clarification is required, the delivery timeline may be extended until the required inputs are available.</p></div><div class="policy-section"><h4>4. Review and revisions</h4><p>After delivery, the customer may reply to the report email with reasonable changes or corrections relating to the information originally provided. Revised PDFs may be issued where applicable. Changes that materially alter the scope of the original assignment may require additional work or charges.</p></div><div class="policy-section"><h4>5. No approval guarantee</h4><p>A project report is a professional planning and documentation service. It does not guarantee approval of a bank loan, subsidy, PMEGP application, grant, government permission, investor funding, land allocation or any other third-party decision. Final decisions are made by the relevant bank, authority, institution or investor.</p></div><div class="policy-section"><h4>6. Scope and responsibility</h4><p>StartProject is responsible for preparing the agreed documentation based on the submitted information. The customer remains responsible for using the report appropriately and for independently verifying information where a bank, authority, consultant or professional advisor requires it.</p></div></div></div>
-<div class="modal" id="privacyModal" onclick="outsideClose(event,'privacyModal')"><div class="modal-box policy-box"><button class="close" onclick="closeModal('privacyModal')">×</button><div class="kicker">LEGAL · PRIVACY</div><h3>Privacy Policy</h3><p>StartProject respects the information customers share while ordering a customized project report or related service.</p><div class="policy-section"><h4>1. Information we collect</h4><p>Depending on the service, we may collect your name, phone number, email address, business or company name, city, project details, project value, funding requirement, business information, financial information and specific report requirements.</p></div><div class="policy-section"><h4>2. How we use your information</h4><p>We use the information you provide to understand your project, calculate the applicable plan, prepare the requested report, process your order, deliver the final PDF, communicate with you about revisions and provide customer support.</p></div><div class="policy-section"><h4>3. Confidentiality</h4><p>Project information submitted through StartProject is not intended for public disclosure. We do not publish your project details, financial information or submitted documents as public content.</p></div><div class="policy-section"><h4>4. Service and operational use</h4><p>Your information may be accessed by authorized members or service providers involved in preparing, processing, delivering or supporting your order. We use such information only as reasonably required to provide the requested service and operate the business.</p></div><div class="policy-section"><h4>5. Retention</h4><p>Information may be retained for service history, customer support, accounting, taxation, dispute resolution, legal compliance and other legitimate business purposes. We may retain records for as long as reasonably necessary for these purposes.</p></div><div class="policy-section"><h4>6. Customer responsibility</h4><p>Please do not submit information that you are not authorized to share. By placing an order, you confirm that the information you provide may be used for the purpose of preparing and delivering the requested service.</p></div></div></div>
+<div class="modal" id="privacyModal" onclick="outsideClose(event,'privacyModal')"><div class="modal-box policy-box"><button class="close" onclick="closeModal('privacyModal')">×</button><div class="kicker">LEGAL · PRIVACY</div><h3>Privacy Policy</h3><p>StartProject respects the information customers share while ordering a customized project report or related service.</p><div class="policy-section"><h4>1. Information we collect</h4><p>Depending on the service, we may collect your name, email address, business or company name, city, project details, project value, funding requirement, business information, financial information and specific report requirements.</p></div><div class="policy-section"><h4>2. How we use your information</h4><p>We use the information you provide to understand your project, calculate the applicable plan, prepare the requested report, process your order, deliver the final PDF, communicate with you about revisions and provide customer support.</p></div><div class="policy-section"><h4>3. Confidentiality</h4><p>Project information submitted through StartProject is not intended for public disclosure. We do not publish your project details, financial information or submitted documents as public content.</p></div><div class="policy-section"><h4>4. Service and operational use</h4><p>Your information may be accessed by authorized members or service providers involved in preparing, processing, delivering or supporting your order. We use such information only as reasonably required to provide the requested service and operate the business.</p></div><div class="policy-section"><h4>5. Retention</h4><p>Information may be retained for service history, customer support, accounting, taxation, dispute resolution, legal compliance and other legitimate business purposes. We may retain records for as long as reasonably necessary for these purposes.</p></div><div class="policy-section"><h4>6. Customer responsibility</h4><p>Please do not submit information that you are not authorized to share. By placing an order, you confirm that the information you provide may be used for the purpose of preparing and delivering the requested service.</p></div></div></div>
 <div class="modal" id="refundModal" onclick="outsideClose(event,'refundModal')"><div class="modal-box policy-box"><button class="close" onclick="closeModal('refundModal')">×</button><div class="kicker">LEGAL · REFUNDS</div><h3>Refund Policy</h3><p>Because StartProject reports are customized and work is undertaken specifically for each customer, our refund policy is based on the stage of the order.</p><div class="policy-section"><h4>1. Before work begins</h4><p>If an order has been placed but work has not yet commenced, please contact us immediately. Any refund request at this stage will be reviewed based on whether work, processing or third-party costs have already been incurred.</p></div><div class="policy-section"><h4>2. After work has commenced</h4><p>Once the order has been confirmed, the required information has been received and work has commenced, payments are generally non-refundable because the service involves customized research, financial preparation, report drafting and project-specific work.</p></div><div class="policy-section"><h4>3. Delivery and revisions</h4><p>A request for reasonable corrections or revisions to information supplied by the customer does not by itself qualify as a refund. Where applicable, the customer may reply to the delivery email with the required changes and we can issue a revised PDF.</p></div><div class="policy-section"><h4>4. Incorrect or incomplete information</h4><p>If the customer provides incorrect, incomplete or materially changed information after work has started, the resulting delay, revision or additional work does not automatically create a refund entitlement. Additional scope may require a separate commercial discussion.</p></div><div class="policy-section"><h4>5. Delivery issues</h4><p>If there is a genuine issue with delivery of the agreed report, please contact us through the registered email or contact details used for the order so that we can review and resolve the issue.</p></div><div class="policy-links"><button class="btn btn-light" onclick="closeModal('refundModal');openModal('termsModal')">Terms & Conditions</button><button class="btn btn-light" onclick="closeModal('refundModal');openModal('privacyModal')">Privacy Policy</button></div></div></div>
 
 
@@ -351,11 +352,43 @@ function nextProjectStep(){
  if(projectStep<3)showProjectStep(projectStep+1);
 }
 function prevProjectStep(){if(projectStep>1)showProjectStep(projectStep-1)}
+function getMarketingData(){
+ const params=new URLSearchParams(window.location.search);
+ const pick=(key)=>{const v=params.get(key);return v?v.trim().slice(0,500):null};
+ return {
+   marketingSource:pick("utm_source"),
+   marketingMedium:pick("utm_medium"),
+   marketingCampaign:pick("utm_campaign"),
+   marketingContent:pick("utm_content"),
+   marketingTerm:pick("utm_term"),
+   gclid:pick("gclid"),
+   fbclid:pick("fbclid"),
+   liFatId:pick("li_fat_id"),
+   landingPage:window.location.href.slice(0,2000),
+   referrer:document.referrer?document.referrer.slice(0,2000):null
+ };
+}
+function getSourceTag(){
+ const m=getMarketingData();
+ if(m.marketingSource)return m.marketingSource;
+ if(m.gclid)return "google";
+ if(m.fbclid)return "meta";
+ if(m.liFatId)return "linkedin";
+ return "direct";
+}
+async function postLead(data){
+ data={...data,...getMarketingData(),sourceTag:getSourceTag()};
+ const r=await fetch("/api/leads",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(data)});
+ const msg=await r.json().catch(()=>({}));
+ if(!r.ok)throw new Error(msg.details||msg.error||`Request failed (${r.status})`);
+ return msg;
+}
 async function submitProject(e){
  e.preventDefault();
  const value=numericINR(document.getElementById("projectValue").value);
  if(!value){showProjectStep(1);return document.getElementById("projectValue").focus()}
  const form=e.target;
+ const submitBtn=document.getElementById("projectSubmitBtn");
  const data=Object.fromEntries(new FormData(form).entries());
  data.type="project_report";
  data.projectValue=value;
@@ -363,13 +396,19 @@ async function submitProject(e){
  data.workExperience=data.experience||"";
  data.plan=selectedPlan;
  data.planPrice=numericINR(plans[selectedPlan]?.total || "");
+ data.purpose=[...form.querySelectorAll('input[name="purpose"]:checked')].map(x=>x.value);
+ submitBtn.disabled=true;
+ submitBtn.classList.add("is-loading");
  try{
-   const r=await fetch("/api/leads",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(data)});
-   if(!r.ok){const msg=await r.json().catch(()=>({}));throw new Error(msg.error||"Request failed");}
-   const result=await r.json();
+   await postLead(data);
    const routes={enterprise:"https://rzp.io/rzp/V2iBr0Ty",pro:"https://rzp.io/rzp/7W5gH39a",super:"https://rzp.io/rzp/bkxzDViw"};
    window.location.href=routes[selectedPlan];
- }catch(err){console.error("StartProject submission error",err);alert("We could not submit your request right now. Please try again.")}
+ }catch(err){
+   console.error("StartProject submission error",err);
+   submitBtn.disabled=false;
+   submitBtn.classList.remove("is-loading");
+   alert("We could not submit your request right now.\n\n"+err.message)
+ }
 }
 async function submitForm(e,id){
  e.preventDefault();
@@ -377,11 +416,10 @@ async function submitForm(e,id){
  const data=Object.fromEntries(new FormData(form).entries());
  data.type=id==="investorForm"?"investor_dpr":"business_plan";
  try{
-   const r=await fetch("/api/leads",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(data)});
-   if(!r.ok)throw new Error("Request failed");
+   await postLead(data);
    alert("Thank you. Your request has been received. We will contact you shortly.");
    form.reset();closeModal(id==="investorForm"?"investorModal":"businessModal");
- }catch(err){alert("We could not submit your request right now. Please try again.")}
+ }catch(err){console.error("StartProject enquiry error",err);alert("We could not submit your request right now.\n\n"+err.message)}
 }
 function openModal(id){document.getElementById(id).classList.add("open");document.body.style.overflow="hidden";if(id==="projectModal"){planManuallyChanged=false;setPlan("enterprise");showProjectStep(1)}}
 function closeModal(id){document.getElementById(id).classList.remove("open");document.body.style.overflow=""}

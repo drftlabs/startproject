@@ -75,6 +75,43 @@ footer{margin-top:52px;background:#111318;color:#fff;padding:40px 0 22px}.footer
 .policy-box{width:min(700px,100%);padding:30px}.policy-box>p{font-size:10px;line-height:1.7;color:var(--muted);margin-bottom:16px}.policy-section{padding:13px 0;border-top:1px solid #eef0f3}.policy-section h4{font-size:10px;margin:0 0 5px;color:var(--text)}.policy-section p{font-size:9px;line-height:1.7;color:var(--muted);margin:0}.policy-links{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}.policy-links .btn{font-size:8px;padding:9px 11px}
 
 .submit-spinner{display:none;width:17px;height:17px;border:2px solid rgba(255,255,255,.45);border-top-color:#fff;border-radius:50%;animation:spSpin .7s linear infinite;vertical-align:middle}.form-submit.is-loading .submit-spinner{display:inline-block}.form-submit.is-loading .submit-label{display:none}.form-submit.is-loading{cursor:wait;opacity:.9}@keyframes spSpin{to{transform:rotate(360deg)}}
+
+/* Mobile typography refinement */
+@media(max-width:850px){
+  /* Website typography: +10% */
+  .hero h1{font-size:clamp(46.2px,13.2vw,68.2px)}
+  .hero-copy{font-size:14.3px}
+  .btn{font-size:11px}
+  .quick-list span{font-size:11px}
+  .hero-note{font-size:9.9px}
+  .hero-report-head small{font-size:8.8px}.hero-report-head strong{font-size:15.4px}
+  .hero-rstats small{font-size:8.8px}.hero-rstats b{font-size:13.2px}
+  .hero-rtitle{font-size:9.9px}.hero-rr{font-size:9.9px}.hero-plabel{font-size:8.8px}
+  .hero-float-card{font-size:9.9px}
+  .report-label{font-size:8.8px}.status{font-size:7.7px}.report-card h3{font-size:26.4px}.report-card p{font-size:9.9px}.report-footer{font-size:7.7px}
+  .trust .rating{font-size:11px}.stars{font-size:14.3px}.order-note{font-size:9.9px}
+  .kicker{font-size:8.8px}.section h2{font-size:clamp(31.9px,4.4vw,49.5px)}.section-head p{font-size:11px}
+  .process-card{font-size:11px}.process-card h3{font-size:14.3px}.process-card p{font-size:9.9px}.process-num{font-size:8.8px}
+  .plan-card h3{font-size:19.8px}.plan-card p,.plan-card li{font-size:9.9px}.plan-price{font-size:26.4px}.plan-badge{font-size:8.8px}
+  .option h3{font-size:14.3px}.option p{font-size:9.9px}.option .btn{font-size:9.9px}
+  details summary{font-size:11px}details p{font-size:9.9px}
+  .footer-company p,.footer-links button{font-size:9.9px}
+}
+
+@media(max-width:850px){
+  /* Forms: +20% typography */
+  .modal-box h3{font-size:30px}.modal-box>p{font-size:10.8px}
+  .form-page-title{font-size:14.4px}
+  .form-step b{font-size:9px}.form-step span{font-size:9.6px}
+  .field label{font-size:9.6px}
+  .field input,.field select,.field textarea{font-size:10.8px}
+  .field input::placeholder,.field textarea::placeholder{font-size:10.8px}
+  .purpose-grid span{font-size:9px}
+  .form-next,.form-submit,.form-back{font-size:10.2px}
+  .plan-selector small{font-size:8.4px}.plan-selector strong{font-size:14.4px}.plan-selector span{font-size:8.4px}.plan-selector select{font-size:9.6px}
+  .contact-note{font-size:9.6px}
+  .policy-box>p{font-size:12px}.policy-section h4{font-size:12px}.policy-section p{font-size:10.8px}.policy-links .btn{font-size:9.6px}
+}
 </style>
 </head>
 <body>

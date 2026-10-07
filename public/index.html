@@ -364,11 +364,11 @@ async function submitProject(e){
  data.planPrice=plans[selectedPlan]?.total || null;
  try{
    const r=await fetch("/api/leads",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(data)});
-   if(!r.ok)throw new Error("Request failed");
+   if(!r.ok){const msg=await r.json().catch(()=>({}));throw new Error(msg.error||"Request failed");}
    const result=await r.json();
    const routes={enterprise:"https://rzp.io/rzp/V2iBr0Ty",pro:"https://rzp.io/rzp/7W5gH39a",super:"https://rzp.io/rzp/bkxzDViw"};
    window.location.href=routes[selectedPlan]+(result.id?"&lead="+encodeURIComponent(result.id):"");
- }catch(err){alert("We could not submit your request right now. Please try again.")}
+ }catch(err){console.error("StartProject submission error",err);alert("We could not submit your request right now. Please try again.")}
 }
 async function submitForm(e,id){
  e.preventDefault();
@@ -385,7 +385,6 @@ async function submitForm(e,id){
 function openModal(id){document.getElementById(id).classList.add("open");document.body.style.overflow="hidden";if(id==="projectModal"){planManuallyChanged=false;setPlan("enterprise");showProjectStep(1)}}
 function closeModal(id){document.getElementById(id).classList.remove("open");document.body.style.overflow=""}
 function outsideClose(e,id){if(e.target.id===id)closeModal(id)}
-function submitForm(e,id){e.preventDefault();alert("Thank you. Your request has been received. We will contact you shortly.");e.target.reset();closeModal(id)}
 document.addEventListener("keydown",e=>{if(e.key==="Escape")document.querySelectorAll(".modal.open").forEach(m=>closeModal(m.id))});
 </script>
 </body>

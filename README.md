@@ -20,3 +20,9 @@ The Supabase service-role key is server-side only. Never put it in frontend code
 Enterprise: https://rzp.io/rzp/V2iBr0Ty
 Pro: https://rzp.io/rzp/7W5gH39a
 Super: https://rzp.io/rzp/bkxzDViw
+
+
+## Vercel environment variables
+Set `SUPABASE_URL` and `SUPABASE_SECRET_KEY` in Vercel. The secret key must remain server-side and must never be placed in `public/index.html` or committed to GitHub. The API also accepts the older `SUPABASE_SERVICE_ROLE_KEY` name for compatibility.
+
+Health check: `/api/health`

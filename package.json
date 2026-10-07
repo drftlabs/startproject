@@ -2,5 +2,9 @@
   "name": "startproject",
   "version": "1.0.0",
   "private": true,
-  "dependencies": { "@supabase/supabase-js": "^2.57.4" }
+  "dependencies": {
+    "@supabase/supabase-js": "^2.57.4",
+    "formidable": "^3.5.2",
+    "xlsx": "^0.18.5"
+  }
 }

@@ -50,3 +50,6 @@ Set these Vercel Production environment variables:
 - `ADMIN_SESSION_SECRET` — long random secret used to sign the HttpOnly admin session cookie
 
 The dashboard reads leads through a server-side Vercel API using the Supabase secret key. The Supabase secret key is never exposed to the browser.
+
+## Admin lead details and PDFs
+Run `supabase/migration_admin_pdf.sql` once to add `report_pdf_path` to existing leads. The admin dashboard provides a full lead view, per-lead XLSX download, and a private PDF upload stored in the Supabase `lead-pdfs` bucket through the server-side API.

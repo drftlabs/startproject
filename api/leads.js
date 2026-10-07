@@ -41,6 +41,6 @@ module.exports = async (req, res) => {
   };
 
   const { data, error } = await supabase.from('leads').insert(record).select('id').single();
-  if (error) return res.status(500).json({ error: 'Could not save enquiry' });
+  if (error) return res.status(500).json({ error: 'Could not save enquiry', details: error.message, code: error.code || null });
   return res.status(201).json({ ok: true, id: data.id });
 };

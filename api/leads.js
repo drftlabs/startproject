@@ -21,14 +21,22 @@ module.exports = async (req, res) => {
   }
 
   const supabase = createClient(url, key, { auth: { persistSession: false } });
+  function numeric(value) {
+    if (value === undefined || value === null || value === '') return null;
+    const digits = String(value).replace(/[^0-9.]/g, '');
+    const n = Number(digits);
+    return Number.isFinite(n) ? n : null;
+  }
+
+  const purpose = Array.isArray(body.purpose) ? body.purpose.map(clean) : clean(body.purpose);
   const record = {
     type,
     name: clean(body.name), phone: clean(body.phone), email: clean(body.email), company: clean(body.company),
     business_type: clean(body.businessType), industry: clean(body.industry), city: clean(body.city),
     project_value: clean(body.projectValue), business_model: clean(body.businessModel), education: clean(body.education),
-    work_experience: clean(body.workExperience), purposes: Array.isArray(body.purpose) ? body.purpose.map(clean) : clean(body.purpose),
+    work_experience: clean(body.workExperience || body.experience), purposes: purpose,
     amount_needed: clean(body.amountNeeded), requirements: clean(body.requirements), plan: clean(body.plan),
-    plan_price: clean(body.planPrice), project_name: clean(body.projectName), project_cost: clean(body.projectCost),
+    plan_price: numeric(body.planPrice), project_name: clean(body.projectName), project_cost: clean(body.projectCost),
     dpr_requirements: clean(body.dprRequirements), business_plan_requirements: clean(body.businessPlanRequirements)
   };
 

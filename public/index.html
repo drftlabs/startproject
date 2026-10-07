@@ -360,14 +360,15 @@ async function submitProject(e){
  data.type="project_report";
  data.projectValue=value;
  data.amountNeeded=numericINR(data.amountNeeded||"");
+ data.workExperience=data.experience||"";
  data.plan=selectedPlan;
- data.planPrice=plans[selectedPlan]?.total || null;
+ data.planPrice=numericINR(plans[selectedPlan]?.total || "");
  try{
    const r=await fetch("/api/leads",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(data)});
    if(!r.ok){const msg=await r.json().catch(()=>({}));throw new Error(msg.error||"Request failed");}
    const result=await r.json();
    const routes={enterprise:"https://rzp.io/rzp/V2iBr0Ty",pro:"https://rzp.io/rzp/7W5gH39a",super:"https://rzp.io/rzp/bkxzDViw"};
-   window.location.href=routes[selectedPlan]+(result.id?"&lead="+encodeURIComponent(result.id):"");
+   window.location.href=routes[selectedPlan];
  }catch(err){console.error("StartProject submission error",err);alert("We could not submit your request right now. Please try again.")}
 }
 async function submitForm(e,id){

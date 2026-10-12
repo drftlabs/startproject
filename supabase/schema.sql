@@ -64,3 +64,18 @@ alter table public.leads add column if not exists referrer text;
 alter table public.leads enable row level security;
 -- No public policies: browser clients cannot directly read or write leads.
 -- Vercel API uses SUPABASE_SERVICE_ROLE_KEY server-side only.
+
+-- Razorpay payment tracking fields
+alter table public.leads add column if not exists razorpay_order_id text;
+alter table public.leads add column if not exists razorpay_payment_id text;
+alter table public.leads add column if not exists razorpay_signature text;
+alter table public.leads add column if not exists payment_status text not null default 'unpaid';
+alter table public.leads add column if not exists order_amount_paise bigint;
+alter table public.leads add column if not exists paid_amount numeric(12,2);
+alter table public.leads add column if not exists payment_currency text not null default 'INR';
+alter table public.leads add column if not exists paid_at timestamptz;
+alter table public.leads add column if not exists payment_method text;
+alter table public.leads add column if not exists payment_error text;
+alter table public.leads add column if not exists razorpay_webhook_event text;
+
+alter table public.leads add column if not exists report_pdf_path text;

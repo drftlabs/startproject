@@ -15,13 +15,6 @@ The Supabase service-role key is server-side only. Never put it in frontend code
 `POST /api/leads` accepts `project_report`, `investor_dpr`, and `business_plan` submissions.
 
 
-## Razorpay Payment Links
-
-Enterprise: https://rzp.io/rzp/V2iBr0Ty
-Pro: https://rzp.io/rzp/7W5gH39a
-Super: https://rzp.io/rzp/bkxzDViw
-
-
 ## Vercel environment variables
 Set `SUPABASE_URL` and `SUPABASE_SECRET_KEY` in Vercel. The secret key must remain server-side and must never be placed in `public/index.html` or committed to GitHub. The API also accepts the older `SUPABASE_SERVICE_ROLE_KEY` name for compatibility.
 
@@ -53,3 +46,14 @@ The dashboard reads leads through a server-side Vercel API using the Supabase se
 
 ## Admin lead details and PDFs
 Run `supabase/migration_admin_pdf.sql` once to add `report_pdf_path` to existing leads. The admin dashboard provides a full lead view, per-lead XLSX download, and a private PDF upload stored in the Supabase `lead-pdfs` bucket through the server-side API.
+
+
+## Razorpay Checkout and payment tracking
+
+1. In Supabase SQL Editor, run `supabase/migration_razorpay_payments.sql` before deploying. It adds payment fields and corrects known historical plan-fee values that were stored without decimals.
+2. In Vercel Production Environment Variables set `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET`, and `RAZORPAY_WEBHOOK_SECRET`. Never put the secret key or webhook secret in browser code or GitHub.
+3. Add a Razorpay webhook with URL `https://www.startproject.in/api/razorpay-webhook`, using the exact same secret as `RAZORPAY_WEBHOOK_SECRET`. Enable `payment.captured` and `order.paid`.
+4. For Google Ads purchase conversion, set `GOOGLE_ADS_CONVERSION_ID` (for example `AW-XXXXXXXXXX`) and `GOOGLE_ADS_CONVERSION_LABEL` in Vercel. Optional GA4 funnel events use `GOOGLE_ANALYTICS_ID`; optional Meta events use `META_PIXEL_ID`. These IDs are public identifiers; API secrets are not.
+5. Redeploy after adding environment variables. The checkout uses server-controlled plan prices: Enterprise ₹672.60, Pro ₹1,227.20, Super ₹1,805.40. The admin dashboard shows fees, payment status, actual paid amount, Razorpay IDs, method and paid timestamp.
+
+The Thank You page polls `/api/payment-status` and fires the Purchase conversion only when the server reports the matching order as paid. Browser-side conversion deduplication uses the payment/order reference. Razorpay webhook updates the same lead idempotently when payment events arrive.

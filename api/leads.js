@@ -30,6 +30,7 @@ module.exports = async (req, res) => {
 
   const purpose = Array.isArray(body.purpose) ? body.purpose.map(clean) : clean(body.purpose);
   const submittedAt = new Date().toISOString();
+  const canonicalFees = { enterprise: 672.60, pro: 1227.20, super: 1805.40 }[String(body.plan || '').trim().toLowerCase()];
   const record = {
     type,
     name: clean(body.name), phone: clean(body.phone), email: clean(body.email), company: clean(body.company),
@@ -37,7 +38,7 @@ module.exports = async (req, res) => {
     project_value: clean(body.projectValue), business_model: clean(body.businessModel), education: clean(body.education),
     work_experience: clean(body.workExperience || body.experience), purposes: purpose,
     amount_needed: clean(body.amountNeeded), requirements: clean(body.requirements), plan: clean(body.plan),
-    plan_price: numeric(body.planPrice), project_name: clean(body.projectName), project_cost: clean(body.projectCost),
+    plan_price: type === 'project_report' && canonicalFees ? canonicalFees : numeric(body.planPrice), project_name: clean(body.projectName), project_cost: clean(body.projectCost),
     dpr_requirements: clean(body.dprRequirements), business_plan_requirements: clean(body.businessPlanRequirements),
     submitted_at: submittedAt,
     source_tag: clean(body.sourceTag),

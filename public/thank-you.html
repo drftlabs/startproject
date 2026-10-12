@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Payment Confirmation — StartProject</title>
+<link rel="icon" type="image/png" href="/startproject-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--purple:#5b4df7;--ink:#111318;--muted:#68707d;--line:#e5e7eb;--bg:#f7f7f8}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% 0,#e8e5ff 0,transparent 45%),var(--bg);color:var(--ink);font-family:Poppins,Arial,sans-serif;display:grid;place-items:center;padding:24px}.card{width:min(620px,100%);background:#fff;border:1px solid var(--line);border-radius:28px;padding:clamp(26px,5vw,48px);text-align:center;box-shadow:0 24px 80px rgba(17,19,24,.09)}.brand{display:flex;align-items:center;justify-content:center;gap:10px;font-weight:700;margin-bottom:28px}.brand img{width:42px;height:42px;object-fit:contain;border-radius:12px}.brand span span{color:var(--purple)}.icon{width:76px;height:76px;border-radius:50%;background:#e8f8ef;color:#168653;display:grid;place-items:center;margin:0 auto 22px;font-size:38px;font-weight:700}.icon.pending{background:#efedff;color:var(--purple);font-size:28px}.spinner{width:28px;height:28px;border:3px solid #d9d5ff;border-top-color:var(--purple);border-radius:50%;animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}h1{font-size:clamp(27px,5vw,38px);letter-spacing:-.04em;margin:0 0 12px}p{color:var(--muted);line-height:1.75;font-size:14px;margin:0 auto 12px}.summary{background:#f8f8fb;border:1px solid #eeeef4;border-radius:14px;padding:16px;margin:24px 0;text-align:left;display:none}.summary div{display:flex;justify-content:space-between;gap:16px;padding:7px 0;font-size:13px}.summary span{color:var(--muted)}.summary strong{text-align:right;overflow-wrap:anywhere}.actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:24px}.btn{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--purple);border-radius:11px;padding:13px 18px;background:var(--purple);color:#fff;text-decoration:none;font-weight:700;font-size:13px;min-height:46px}.btn.secondary{background:#fff;color:var(--ink);border-color:var(--line)}.small{font-size:11px!important;margin-top:22px!important}.hidden{display:none!important}@media(max-width:480px){body{padding:14px}.card{border-radius:22px}.actions{display:grid}.btn{width:100%}.summary div{font-size:12px}}
+</style>
+</head>
+<body>
+<main class="card">
+  <div class="brand"><img src="/startproject-logo.png" alt="StartProject"><span>Start<span>Project</span></span></div>
+  <div id="statusIcon" class="icon pending"><span class="spinner"></span></div>
+  <h1 id="heading">Verifying your payment</h1>
+  <p id="message">Please wait while we confirm your payment securely with StartProject and Razorpay. Do not refresh this page.</p>
+  <div id="summary" class="summary"><div><span>Payment status</span><strong id="paymentStatus">—</strong></div><div><span>Plan</span><strong id="plan">—</strong></div><div><span>Amount paid</span><strong id="amount">—</strong></div><div><span>Payment reference</span><strong id="paymentRef">—</strong></div></div>
+  <div class="actions"><a class="btn" href="/">Back to Home</a><a class="btn secondary" href="mailto:startproject.in@gmail.com?subject=StartProject%20Payment%20Support">Contact Us</a></div>
+  <p class="small">Your report order will be processed after payment confirmation. If we need any additional information, we will contact you using the details you provided.</p>
+</main>
+<script>
+const params=new URLSearchParams(location.search),lead=params.get('lead'),order=params.get('order');
+const $=id=>document.getElementById(id);
+function money(n){return '₹'+Number(n||0).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function showState(kind,title,message){$('heading').textContent=title;$('message').textContent=message;$('statusIcon').className='icon'+(kind==='pending'?' pending':'');$('statusIcon').innerHTML=kind==='pending'?'<span class="spinner"></span>':(kind==='paid'?'✓':'!');}
+let conversionFired=false;
+async function firePurchase(status,tracking){
+ if(conversionFired)return;const transactionId=status.paymentId||order||lead;const storageKey='sp_purchase_conversion_'+transactionId;
+ try{if(localStorage.getItem(storageKey))return;localStorage.setItem(storageKey,'sent');}catch(_){ }
+ conversionFired=true;const value=Number(status.paidAmount)||0;const currency=status.currency||'INR';
+ const googleIds=[tracking.googleAnalyticsId,tracking.googleAdsConversionId].filter(Boolean);
+ if(googleIds.length){window.dataLayer=window.dataLayer||[];window.gtag=window.gtag||function(){dataLayer.push(arguments)};const script=document.createElement('script');script.async=true;script.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(googleIds[0]);document.head.appendChild(script);gtag('js',new Date());googleIds.forEach(id=>gtag('config',id));
+   gtag('event','purchase',{transaction_id:transactionId,value,currency,items:[{item_id:status.plan||'project_report',item_name:'Customized Project Report',item_category:'Project Report',price:value,quantity:1}]});
+   if(tracking.googleAdsConversionId&&tracking.googleAdsConversionLabel){gtag('event','conversion',{send_to:tracking.googleAdsConversionId+'/'+tracking.googleAdsConversionLabel,value,currency,transaction_id:transactionId});}
+ }
+ if(tracking.metaPixelId){!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init',tracking.metaPixelId);fbq('track','Purchase',{value,currency,content_name:'Customized Project Report',content_ids:[status.plan||'project_report'],content_type:'product'});}
+}
+async function check(){
+ if(!lead||!order){showState('error','Payment reference missing','We could not find the payment reference in this page. If your payment was completed, please contact us before paying again.');return;}
+ let tracking={};try{const tr=await fetch('/api/tracking-config',{cache:'no-store'});if(tr.ok)tracking=await tr.json();}catch(_){ }
+ for(let i=0;i<15;i++){
+  try{const r=await fetch('/api/payment-status?lead='+encodeURIComponent(lead)+'&order='+encodeURIComponent(order),{cache:'no-store'});const j=await r.json();
+   if(r.ok&&j.paid){showState('paid','Payment received!','Thank you for placing your order with StartProject. Your project report order has been confirmed. We will send the report to your email when it is ready. If we need any additional information, we will contact you using the details you provided.');$('summary').style.display='block';$('paymentStatus').textContent='Paid';$('plan').textContent=j.plan||'Project Report';$('amount').textContent=money(j.paidAmount);$('paymentRef').textContent=j.paymentId||order;await firePurchase(j,tracking);return;}
+   if(r.status===404){showState('error','We could not verify this payment','Please contact us with your Razorpay payment reference. Do not make another payment until the status has been checked.');return;}
+  }catch(_){ }
+  await new Promise(resolve=>setTimeout(resolve,2000));
+ }
+ showState('pending','Payment confirmation is taking longer','Your payment may still be processing. Please do not pay again. Refresh this page in a minute, or contact us with your Razorpay reference.');
+}
+check();
+</script>
+</body></html>

@@ -1,0 +1,15 @@
+STARTPROJECT — VERCEL HOBBY FUNCTION-LIMIT FIX
+
+IMPORTANT: GitHub's “Add files via upload” does not delete files that already exist in the repository. The failed deployment screenshot still showing 15 functions after uploading a 12-function ZIP strongly suggests old API files remained in GitHub.
+
+This archive has exactly 12 files in api/. Extract this archive and replace/update the repository files. Then DELETE these four old files from the GitHub repository if they still exist:
+- api/admin-login.js
+- api/admin-me.js
+- api/admin-logout.js
+- api/health.js
+
+These four files were consolidated/removed: admin-session.js now handles login, session check, and logout through rewrites in vercel.json; health.js was removed. Do not delete api/admin-auth.js; it contains shared session helpers.
+
+Commit all deletions and additions to main, then check the new deployment's build logs. Vercel should detect no more than 12 API functions. Keep existing Vercel environment variables; do not commit secrets.
+
+The archive includes the Google Ads tag AW-18499638139 and the Razorpay API routes. A successful build is not proof of a successful live payment; test Razorpay in test mode after deployment.

@@ -11,26 +11,19 @@
   gtag('config', 'AW-18499638139');
 </script>
 <title>Online Project Report Generator for Businesses | StartProject</title>
-
-<meta
-  name="description"
-  content="Create business project reports online with StartProject. Prepare structured project reports for business planning, funding requirements and financial projections."
->
-
-<meta
-  name="robots"
-  content="index, follow"
->
-
-<link
-  rel="canonical"
-  href="https://www.startproject.in/"
->
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>StartProject — Customized Project Reports</title>
-<link rel="icon" type="image/png" href="startproject-logo.png">
-<meta name="description" content="Customized project reports for bank loans, subsidies, PMEGP, CMA and business planning.">
+<meta name="description" content="Create customized business project reports online with StartProject. Prepare structured reports for business planning, funding requirements and financial projections.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.startproject.in/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="StartProject">
+<meta property="og:title" content="Online Project Report Generator for Businesses | StartProject">
+<meta property="og:description" content="Create customized business project reports online with StartProject. Prepare structured reports for business planning, funding requirements and financial projections.">
+<meta property="og:url" content="https://www.startproject.in/">
+<meta property="og:image" content="https://www.startproject.in/startproject-logo.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Online Project Report Generator for Businesses | StartProject">
+<meta name="twitter:description" content="Create customized business project reports online with StartProject.">
+<link rel="icon" type="image/png" href="/startproject-logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -141,13 +134,42 @@ footer{margin-top:52px;background:#111318;color:#fff;padding:40px 0 22px}.footer
   .policy-box>p{font-size:12px}.policy-section h4{font-size:12px}.policy-section p{font-size:10.8px}.policy-links .btn{font-size:9.6px}
 }
 </style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.startproject.in/#organization",
+      "name": "StartProject",
+      "url": "https://www.startproject.in/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.startproject.in/startproject-logo.png"
+      },
+      "email": "startproject.in@gmail.com"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.startproject.in/#website",
+      "url": "https://www.startproject.in/",
+      "name": "StartProject",
+      "publisher": {
+        "@id": "https://www.startproject.in/#organization"
+      },
+      "inLanguage": "en-IN"
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <header class="nav">
   <div class="container nav-inner">
     <a class="brand" href="#"><span class="logo"><img src="startproject-logo.png" alt="StartProject logo"></span><span>Start<span class="brand-project">Project</span></span></a>
     <nav class="nav-links">
-      <a href="#plans">Plans</a><a href="#process">How it works</a><a href="#report">What's in the report</a><a href="#faq">FAQ</a>
+      <a href="#plans">Plans</a><a href="#process">How it works</a><a href="#uses">Use cases</a><a href="#report">What's in the report</a><a href="#faq">FAQ</a>
       <button class="nav-cta" onclick="openModal('projectModal')">Start a Report →</button>
     </nav>
     <button class="menu" aria-label="Menu" onclick="document.querySelector('.nav-links').classList.toggle('mobile')">☰</button>
@@ -157,7 +179,7 @@ footer{margin-top:52px;background:#111318;color:#fff;padding:40px 0 22px}.footer
 <!-- MODALS: fixed overlays, kept outside page sections -->
 <div class="modal" id="projectModal" onclick="outsideClose(event,'projectModal')">
 <div class="project-modal-box modal-box"><button class="close" onclick="closeModal('projectModal')">×</button>
-<div class="form-head"><div class="kicker">START YOUR PROJECT</div><h3>Build your report in 3 steps.</h3><p>We’ll calculate the suitable plan from your project value.</p></div>
+<div class="form-head"><div class="kicker">START YOUR PROJECT</div><h2>Build your report in 3 steps.</h2><p>We’ll calculate the suitable plan from your project value.</p></div>
 <div class="form-progress"><div class="form-step" data-step="1"><span>1</span><b>Project</b></div><i></i><div class="form-step" data-step="2"><span>2</span><b>Requirements</b></div><i></i><div class="form-step active" data-step="3"><span>3</span><b>Contact</b></div></div>
 <form id="projectForm" onsubmit="submitProject(event)">
 <div class="form-page active" data-page="1">
